@@ -1,5 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
+import { RecipeService } from '../recipe.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-list',
@@ -7,19 +9,21 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-  @Output() selectedRecipe = new EventEmitter<Recipe>();
-  recipes: Recipe[] = [
-    // tslint:disable-next-line: max-line-length
-    new Recipe('Test Recipe', 'this is a simple description', 'https://media3.s-nbcnews.com/j/MSNBC/Components/Video/201808/tdy_food_klg_chicken_180828_1920x1080.today-inline-vid-featured-desktop.jpg' ),
-    // tslint:disable-next-line: max-line-length
-    new Recipe('Another Test Recipe', 'this is a simple description', 'https://media3.s-nbcnews.com/j/MSNBC/Components/Video/201808/tdy_food_klg_chicken_180828_1920x1080.today-inline-vid-featured-desktop.jpg' )
-
-  ];
-  constructor() { }
+  recipes: Recipe[];
+  constructor(private recipeService: RecipeService,
+              private router: Router,
+              private route: ActivatedRoute ) { }
 
   ngOnInit() {
+    this.recipes = this.recipeService.getRecipes();
   }
+
+  onNewRecipe() {
+    this.router.navigate(['new'], {relativeTo: this.route});
+  }
+  /*
   onRecipeSelected(recipe: Recipe) {
     this.selectedRecipe.emit(recipe);
   }
+  */
 }

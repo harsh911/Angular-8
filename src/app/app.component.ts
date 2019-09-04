@@ -9,10 +9,5 @@ export class AppComponent {
   title = 'project';
   tabsloaded = 'recipe';
 
-  onNavigate(tabs: string) {
-    this.tabsloaded = tabs;
-  }
-
-
 }
 
